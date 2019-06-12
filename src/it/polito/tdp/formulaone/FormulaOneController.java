@@ -4,8 +4,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.formulaone.model.Model;
+import it.polito.tdp.formulaone.model.Season;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -22,7 +24,7 @@ public class FormulaOneController {
     private URL location;
 
     @FXML // fx:id="boxAnno"
-    private ComboBox<?> boxAnno; // Value injected by FXMLLoader
+    private ComboBox<Season> boxAnno; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnSelezionaStagione"
     private Button btnSelezionaStagione; // Value injected by FXMLLoader
@@ -44,7 +46,12 @@ public class FormulaOneController {
 
     @FXML
     void doSelezionaStagione(ActionEvent event) {
-    	txtResult.setText("btn Seleziona stagione premuto");
+    	Season s = boxAnno.getValue();
+    	if(s!=null) {
+    		txtResult.setText(model.getArcoPesoMax(s));
+    	}else {
+    		showMessage("Errore: Seleziona una stagione dal menù a tendina");
+    	}
     }
 
     @FXML
@@ -65,6 +72,12 @@ public class FormulaOneController {
 
 	public void setModel(Model model) {
 		this.model = model;
-		
+		boxAnno.getItems().addAll(model.getAllSeasons()); 
+	}
+	
+	private void showMessage(String message) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setContentText(message);
+		alert.show();
 	}
 }
