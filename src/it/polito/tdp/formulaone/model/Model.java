@@ -42,12 +42,17 @@ public class Model {
 				Graphs.addEdgeWithVertices(grafo, pg.getR1(), pg.getR2(), pg.getPeso());
 			}
 		}
+		risultato+="Grafo Creato! Vertici: "+grafo.vertexSet().size()+" Archi: "+grafo.edgeSet().size()+"\n";
 		double max=0;
 		for(DefaultWeightedEdge edge: grafo.edgeSet()) {
 			double pesoArco = grafo.getEdgeWeight(edge);
 			if(pesoArco>max) {
 				max=pesoArco;
 				risultato="Peso arco massimo: "+max+" Gara1: "+grafo.getEdgeSource(edge).getName()+" Gara2: "+grafo.getEdgeTarget(edge).getName()+"\n";
+			}
+			else if(pesoArco==max) {
+				max=pesoArco;
+				risultato+="Peso arco massimo: "+max+" Gara1: "+grafo.getEdgeSource(edge).getName()+" Gara2: "+grafo.getEdgeTarget(edge).getName()+"\n";
 			}
 		}
 		return risultato;
